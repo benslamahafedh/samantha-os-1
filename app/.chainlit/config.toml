@@ -49,35 +49,27 @@ edit_message = false
 name = "Samantha"
 
 # Description of the assistant. This is used for HTML tags.
-description = "Ultimate AI Companion with Real-time Voice Interaction"
+description = "Futuristic Anime AGI with Voice Interaction"
 
 # Large size content are by default collapsed for a cleaner ui
 default_collapse_content = false
 
 # Chain of Thought (CoT) display mode. Can be "hidden", "tool_call" or "full".
-cot = "full"
+cot = "hidden"
 
 # Link to your github repo. This will add a github button in the UI's header.
 # github = ""
 
-# Specify a CSS file that can be used to customize the user interface.
-# The CSS file can be served from the public directory or via an external link.
-custom_css = "/public/anime-style.css"
-
-# Specify a Javascript file that can be used to customize the user interface.
-# The Javascript file can be served from the public directory.
-custom_js = "/public/anime-interface.js"
+# Specify a custom build directory for the frontend.
+# This can be used to customize the frontend code.
+# Be careful: If this is a relative path, it should not start with a slash.
+custom_build = "./public/build"
 
 # Specify a custom font url.
 custom_font = "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
 
 # Specify a custom meta image url.
 # custom_meta_image_url = "https://chainlit-cloud.s3.eu-west-3.amazonaws.com/logo/chainlit_banner.png"
-
-# Specify a custom build directory for the frontend.
-# This can be used to customize the frontend code.
-# Be careful: If this is a relative path, it should not start with a slash.
-# custom_build = "./public/build"
 
 [UI.theme]
     default = "light"
@@ -86,7 +78,7 @@ custom_font = "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;40
 
 # Override default MUI light theme for Samantha's anime aesthetic
 [UI.theme.light]
-    background = "#667eea"
+    background = "#0a0a0f"
     paper = "#ffffff"
 
     [UI.theme.light.primary]
@@ -94,8 +86,8 @@ custom_font = "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;40
         dark = "#e91e63"
         light = "#ff9ec3"
     [UI.theme.light.text]
-        primary = "#1f2937"
-        secondary = "#6b7280"
+        primary = "#ffffff"
+        secondary = "#cccccc"
 
 [meta]
 generated_by = "2.5.5"
@@ -106,8 +98,8 @@ temperature = 0.7
 
 [theme]
 primary_color = "#ff6b9d"
-background_color = "#667eea"
-text_color = "#1f2937"
+background_color = "#0a0a0f"
+text_color = "#ffffff"
 
 [chatProfile]
 
