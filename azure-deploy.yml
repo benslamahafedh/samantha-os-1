@@ -1,0 +1,61 @@
+# Azure Container Instances deployment template
+apiVersion: 2021-03-01
+location: eastus
+name: samantha-os-production
+properties:
+  containers:
+  - name: samantha-app
+    properties:
+      image: your-registry.azurecr.io/samantha-os:latest
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGb: 2.0
+        limits:
+          cpu: 2.0
+          memoryInGb: 4.0
+      ports:
+      - port: 80
+        protocol: TCP
+      - port: 443
+        protocol: TCP
+      environmentVariables:
+      - name: OPENAI_API_KEY
+        secureValue: YOUR_OPENAI_API_KEY
+      - name: CHAINLIT_HOST
+        value: "0.0.0.0"
+      - name: CHAINLIT_PORT
+        value: "8000"
+      - name: CHAINLIT_HEADLESS
+        value: "true"
+      - name: SSL_CERT_PATH
+        value: "/etc/ssl/certs/cert.pem"
+      - name: SSL_KEY_PATH
+        value: "/etc/ssl/private/key.pem"
+      volumeMounts:
+      - name: ssl-certs
+        mountPath: /etc/ssl/certs
+        readOnly: true
+      - name: ssl-keys
+        mountPath: /etc/ssl/private
+        readOnly: true
+  osType: Linux
+  restartPolicy: Always
+  ipAddress:
+    type: Public
+    ports:
+    - protocol: TCP
+      port: 80
+    - protocol: TCP
+      port: 443
+    dnsNameLabel: samantha-os-production
+  volumes:
+  - name: ssl-certs
+    secret:
+      cert.pem: base64-encoded-certificate
+  - name: ssl-keys
+    secret:
+      key.pem: base64-encoded-private-key
+tags:
+  environment: production
+  application: samantha-os 

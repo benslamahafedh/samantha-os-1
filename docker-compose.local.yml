@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  samantha-local:
+    build:
+      context: .
+      dockerfile: Dockerfile.working
+    container_name: samantha-local-test
+    ports:
+      - "8080:80"
+      - "8443:443"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CHAINLIT_HOST=0.0.0.0
+      - CHAINLIT_PORT=8000
+      - DOMAIN=localhost
+    volumes:
+      - ./app:/app
+      - ./nginx-local-test.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/ssl:ro
+      - samantha-logs:/var/log
+    networks:
+      - samantha-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    command: >
+      sh -c "
+        mkdir -p /var/log/nginx /var/log/supervisor /var/run/supervisor /ssl /var/log/letsencrypt /var/www/certbot &&
+        nginx -t &&
+        /start-production.sh
+      "
+
+  # Optional: Add a simple web server for testing static files
+  test-server:
+    image: nginx:alpine
+    container_name: samantha-test-server
+    ports:
+      - "8081:80"
+    volumes:
+      - ./app/public:/usr/share/nginx/html:ro
+    networks:
+      - samantha-network
+    profiles:
+      - test
+
+volumes:
+  samantha-logs:
+
+networks:
+  samantha-network:
+    driver: bridge 

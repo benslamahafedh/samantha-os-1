@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  samantha-voice:
+    build:
+      context: .
+      dockerfile: Dockerfile.voice-mode
+    container_name: samantha-voice-mode
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      # Chainlit configuration
+      - CHAINLIT_HOST=0.0.0.0
+      - CHAINLIT_PORT=8000
+    volumes:
+      # Persist scratch pad directory
+      - samantha-scratch:/app/scratch_pad
+      # Optional: Mount logs directory
+      - ./logs:/app/logs
+    networks:
+      - samantha-voice-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "com.samantha.description=Samantha OS Voice Mode"
+      - "com.samantha.version=1.0.0"
+
+volumes:
+  samantha-scratch:
+    driver: local
+
+networks:
+  samantha-voice-network:
+    driver: bridge 

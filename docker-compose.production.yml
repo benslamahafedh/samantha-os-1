@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  samantha-production:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      # OpenAI API Configuration
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      
+      # Azure SSL Certificate paths (if using Azure Key Vault)
+      - SSL_CERT_PATH=${SSL_CERT_PATH:-}
+      - SSL_KEY_PATH=${SSL_KEY_PATH:-}
+      
+      # Application Configuration
+      - CHAINLIT_HOST=0.0.0.0
+      - CHAINLIT_PORT=8000
+      - CHAINLIT_HEADLESS=true
+      
+      # Database Configuration (if needed)
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./data/samantha.db}
+      
+      # Security Configuration
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-here}
+      
+    volumes:
+      # Persist data
+      - samantha_data:/app/data
+      
+      # Azure SSL certificates (if using mounted volumes)
+      - ${HOST_SSL_CERT_PATH:-./ssl/cert.pem}:/etc/ssl/certs/cert.pem:ro
+      - ${HOST_SSL_KEY_PATH:-./ssl/key.pem}:/etc/ssl/private/key.pem:ro
+      
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/health-check.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+      
+    restart: unless-stopped
+    
+    # Resource limits for Azure Container Instances
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  samantha_data:
+    driver: local
+
+networks:
+  default:
+    name: samantha-production 
