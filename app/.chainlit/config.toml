@@ -40,13 +40,15 @@ edit_message = false
 [features.audio]
     # Sample rate of the audio for voice mode
     sample_rate = 24000
+    # Enable audio input/output
+    enabled = true
 
 [UI]
 # Name of the assistant.
-name = "Samantha SOL Music"
+name = "Samantha Voice Assistant"
 
 # Description of the assistant. This is used for HTML tags.
-description = "SoundCloud-Style Anime Music Interface with Waifu Trading Companion"
+description = "AI Voice Companion with Real-time Conversation Capabilities"
 
 # Large size content are by default collapsed for a cleaner ui
 default_collapse_content = false
@@ -57,11 +59,9 @@ cot = "hidden"
 # Link to your github repo. This will add a github button in the UI's header.
 # github = ""
 
-# Custom CSS file for SoundCloud music styling
-custom_css = "/public/style.css"
-
-# Custom JavaScript file for music interface
-custom_js = "/public/sol-effects.js"
+# Custom CSS and JS are now embedded in chainlit.md for voice functionality
+# custom_css = "/public/style.css"
+# custom_js = "/public/sol-effects.js"
 
 [meta]
 generated_by = "2.5.5"
