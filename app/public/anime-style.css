@@ -1,0 +1,489 @@
+/* Samantha OS - Anime Style Interface */
+/* Inspired by modern anime game UI with clean design principles */
+
+/* Import anime-style fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* CSS Custom Properties for anime theme */
+:root {
+  /* Anime-inspired color palette */
+  --samantha-primary: #ff6b9d;
+  --samantha-secondary: #8b5cf6;
+  --samantha-accent: #06b6d4;
+  --samantha-warm: #f59e0b;
+  
+  /* Background gradients */
+  --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --bg-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --bg-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  
+  /* Text colors */
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-light: #ffffff;
+  --text-muted: #9ca3af;
+  
+  /* Glassmorphism effects */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  
+  /* Anime-style shadows */
+  --anime-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --anime-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.25);
+  
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans JP', 'Inter', sans-serif;
+  background: var(--bg-primary);
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Anime-style background with animated particles */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 107, 157, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+  animation: backgroundFloat 20s ease-in-out infinite;
+}
+
+@keyframes backgroundFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(1deg); }
+}
+
+/* Main container styling */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styling with anime aesthetic */
+.cl-header {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  padding: var(--space-md) var(--space-lg) !important;
+}
+
+.cl-header h1 {
+  color: var(--text-light) !important;
+  font-weight: 600 !important;
+  font-size: 1.5rem !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  margin: 0 !important;
+}
+
+/* Main chat container */
+.cl-chat-container {
+  background: transparent !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: var(--space-lg) !important;
+  flex: 1 !important;
+}
+
+/* Message styling with anime character theme */
+.cl-message {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--anime-shadow) !important;
+  margin: var(--space-md) 0 !important;
+  padding: var(--space-lg) !important;
+  transition: all var(--transition-normal) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.cl-message:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--anime-shadow-hover) !important;
+}
+
+/* Samantha's messages (assistant) */
+.cl-message[data-author="Samantha"] {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%) !important;
+  border-left: 4px solid var(--samantha-primary) !important;
+}
+
+.cl-message[data-author="Samantha"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--samantha-primary), var(--samantha-secondary)) !important;
+  animation: shimmer 2s ease-in-out infinite !important;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* User messages */
+.cl-message[data-author="User"] {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%) !important;
+  border-left: 4px solid var(--samantha-accent) !important;
+}
+
+/* Message content styling */
+.cl-message-content {
+  color: var(--text-light) !important;
+  font-size: 1rem !important;
+  line-height: 1.7 !important;
+}
+
+.cl-message-content h1,
+.cl-message-content h2,
+.cl-message-content h3,
+.cl-message-content h4,
+.cl-message-content h5,
+.cl-message-content h6 {
+  color: var(--text-light) !important;
+  font-weight: 600 !important;
+  margin: var(--space-md) 0 var(--space-sm) 0 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.cl-message-content p {
+  margin: var(--space-sm) 0 !important;
+  color: var(--text-light) !important;
+}
+
+.cl-message-content code {
+  background: rgba(0, 0, 0, 0.3) !important;
+  color: var(--samantha-accent) !important;
+  padding: var(--space-xs) var(--space-sm) !important;
+  border-radius: var(--radius-sm) !important;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+  font-size: 0.9rem !important;
+}
+
+.cl-message-content pre {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-md) !important;
+  padding: var(--space-md) !important;
+  overflow-x: auto !important;
+  margin: var(--space-md) 0 !important;
+}
+
+.cl-message-content pre code {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Input area styling */
+.cl-input-container {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--anime-shadow) !important;
+  margin: var(--space-lg) 0 !important;
+  padding: var(--space-md) !important;
+  position: relative !important;
+}
+
+.cl-input {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-light) !important;
+  font-size: 1rem !important;
+  padding: var(--space-md) !important;
+  width: 100% !important;
+  outline: none !important;
+  resize: none !important;
+  min-height: 60px !important;
+}
+
+.cl-input::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.7 !important;
+}
+
+/* Send button styling */
+.cl-send-button {
+  background: linear-gradient(135deg, var(--samantha-primary), var(--samantha-secondary)) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 48px !important;
+  height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all var(--transition-normal) !important;
+  box-shadow: var(--anime-shadow) !important;
+  position: absolute !important;
+  right: var(--space-md) !important;
+  bottom: var(--space-md) !important;
+}
+
+.cl-send-button:hover {
+  transform: scale(1.1) !important;
+  box-shadow: var(--anime-shadow-hover) !important;
+  background: linear-gradient(135deg, var(--samantha-secondary), var(--samantha-primary)) !important;
+}
+
+.cl-send-button svg {
+  color: var(--text-light) !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* Voice mode button styling */
+.cl-voice-button {
+  background: linear-gradient(135deg, var(--samantha-accent), var(--samantha-warm)) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 56px !important;
+  height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all var(--transition-normal) !important;
+  box-shadow: var(--anime-shadow) !important;
+  margin: var(--space-md) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.cl-voice-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all var(--transition-normal);
+}
+
+.cl-voice-button:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+.cl-voice-button:hover {
+  transform: scale(1.1) !important;
+  box-shadow: var(--anime-shadow-hover) !important;
+}
+
+.cl-voice-button.recording {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  animation: pulse 1s ease-in-out infinite !important;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Sidebar styling */
+.cl-sidebar {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(20px) !important;
+  border-right: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+
+/* Thread list styling */
+.cl-thread-list {
+  background: transparent !important;
+}
+
+.cl-thread-item {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-md) !important;
+  margin: var(--space-sm) 0 !important;
+  padding: var(--space-md) !important;
+  transition: all var(--transition-normal) !important;
+  cursor: pointer !important;
+}
+
+.cl-thread-item:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: translateX(4px) !important;
+}
+
+.cl-thread-item.active {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(139, 92, 246, 0.2)) !important;
+  border-color: var(--samantha-primary) !important;
+}
+
+/* Loading animations */
+.cl-loading {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: var(--space-xl) !important;
+}
+
+.cl-loading-spinner {
+  width: 40px !important;
+  height: 40px !important;
+  border: 3px solid var(--glass-border) !important;
+  border-top: 3px solid var(--samantha-primary) !important;
+  border-radius: 50% !important;
+  animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Tool call styling */
+.cl-tool-call {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-md) !important;
+  padding: var(--space-md) !important;
+  margin: var(--space-sm) 0 !important;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+  font-size: 0.9rem !important;
+  color: var(--samantha-accent) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .cl-chat-container {
+    padding: var(--space-md) !important;
+  }
+  
+  .cl-message {
+    padding: var(--space-md) !important;
+  }
+  
+  .cl-input-container {
+    margin: var(--space-md) 0 !important;
+  }
+  
+  .cl-voice-button {
+    width: 48px !important;
+    height: 48px !important;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--samantha-primary), var(--samantha-secondary));
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--samantha-secondary), var(--samantha-primary));
+}
+
+/* Focus states for accessibility */
+.cl-input:focus,
+.cl-send-button:focus,
+.cl-voice-button:focus {
+  outline: 2px solid var(--samantha-accent) !important;
+  outline-offset: 2px !important;
+}
+
+/* Animation for new messages */
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cl-message {
+  animation: messageSlideIn 0.3s ease-out !important;
+}
+
+/* Special effects for Samantha's character */
+.samantha-character {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 120px;
+  height: 120px;
+  background: url('/public/avatars/my-assistant.png') no-repeat center;
+  background-size: contain;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 1000;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  animation: characterFloat 6s ease-in-out infinite;
+}
+
+@keyframes characterFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+/* Voice mode active state */
+.voice-mode-active .samantha-character {
+  opacity: 0.3;
+  animation: characterSpeak 0.5s ease-in-out infinite;
+}
+
+@keyframes characterSpeak {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+} 

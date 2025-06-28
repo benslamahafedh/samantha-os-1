@@ -60,8 +60,16 @@ cot = "full"
 # Link to your github repo. This will add a github button in the UI's header.
 # github = ""
 
+# Specify a CSS file that can be used to customize the user interface.
+# The CSS file can be served from the public directory or via an external link.
+custom_css = "/public/anime-style.css"
+
+# Specify a Javascript file that can be used to customize the user interface.
+# The Javascript file can be served from the public directory.
+custom_js = "/public/anime-interface.js"
+
 # Specify a custom font url.
-custom_font = "https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+custom_font = "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
 
 # Specify a custom meta image url.
 # custom_meta_image_url = "https://chainlit-cloud.s3.eu-west-3.amazonaws.com/logo/chainlit_banner.png"
@@ -74,20 +82,20 @@ custom_font = "https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;
 [UI.theme]
     default = "light"
     layout = "wide"
-    font_family = "SF Pro Display, Inter, sans-serif"
+    font_family = "Noto Sans JP, Inter, sans-serif"
 
-# Override default MUI light theme for Samantha's warm aesthetic
+# Override default MUI light theme for Samantha's anime aesthetic
 [UI.theme.light]
-    background = "#fef7f0"
+    background = "#667eea"
     paper = "#ffffff"
 
     [UI.theme.light.primary]
-        main = "#ff6b47"
-        dark = "#ff5722"
-        light = "#ffab91"
+        main = "#ff6b9d"
+        dark = "#e91e63"
+        light = "#ff9ec3"
     [UI.theme.light.text]
-        primary = "#2c2419"
-        secondary = "#5d4e37"
+        primary = "#1f2937"
+        secondary = "#6b7280"
 
 [meta]
 generated_by = "2.5.5"
@@ -97,9 +105,9 @@ max_response_output_tokens = 2048
 temperature = 0.7
 
 [theme]
-primary_color = "#ff6b47"
-background_color = "#fef7f0"
-text_color = "#2c2419"
+primary_color = "#ff6b9d"
+background_color = "#667eea"
+text_color = "#1f2937"
 
 [chatProfile]
 
