@@ -30,8 +30,8 @@ ENTRYPOINT []
 # Set the working directory to the app directory
 WORKDIR /app/app
 
-# Expose port 80
-EXPOSE 80
+# Expose default port (Railway will override this)
+EXPOSE 8000
 
-# Run the Chainlit application
-CMD ["chainlit", "run", "samantha.py", "--host", "0.0.0.0", "--port", "80"]
+# Run the Chainlit application using Railway's dynamic port
+CMD ["sh", "-c", "chainlit run samantha.py --host 0.0.0.0 --port ${PORT:-8000}"]
