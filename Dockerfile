@@ -14,14 +14,12 @@ ENV UV_LINK_MODE=copy
 COPY pyproject.toml ./
 
 # Install dependencies and generate lock file if it doesn't exist
-RUN --mount=type=cache,id=uv-cache,target=/root/.cache/uv \
-    uv sync --no-dev
+RUN uv sync --no-dev
 
 # Then, add the rest of the project source code and install it
 # Installing separately from its dependencies allows optimal layer caching
 ADD . /app
-RUN --mount=type=cache,id=uv-cache,target=/root/.cache/uv \
-    uv sync --no-dev
+RUN uv sync --no-dev
 
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
