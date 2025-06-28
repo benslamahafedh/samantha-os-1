@@ -1,0 +1,212 @@
+/* SAMANTHA AGI - Bullish Meme Coin Theme for Chainlit 2.0 */
+/* Ultimate AGI Trading Companion Aesthetic 🚀 */
+
+/* Import crypto trading fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+/* CSS Custom Properties for AGI Theme */
+:root {
+  /* AGI Crypto Colors */
+  --primary: 0 100% 50%;        /* Pure red hsl(0, 100%, 50%) */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 51 100% 50%;     /* Gold hsl(51, 100%, 50%) */
+  --secondary-foreground: 0 0% 0%;
+  --background: 0 0% 0%;        /* Pure black */
+  --foreground: 0 0% 100%;      /* Pure white */
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 100%;
+  --popover: 0 0% 5%;
+  --popover-foreground: 0 0% 100%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+  --accent: 0 100% 20%;
+  --accent-foreground: 0 0% 100%;
+  --border: 0 100% 30%;
+  --input: 0 0% 10%;
+  --ring: 0 100% 50%;
+  
+  /* AGI Specific Colors */
+  --agi-red: #ff0000;
+  --agi-gold: #ffd700;
+  --agi-green: #00ff41;
+  --agi-cyan: #00d4ff;
+  --agi-purple: #9945ff;
+}
+
+/* Global font settings */
+* {
+  font-family: 'Rajdhani', 'Orbitron', ui-sans-serif, system-ui, sans-serif !important;
+}
+
+/* Main background with crypto grid */
+body {
+  background: linear-gradient(135deg, #000000 0%, #1a0000 25%, #330000 50%, #1a0000 75%, #000000 100%) !important;
+  background-attachment: fixed !important;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Add animated crypto background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 0, 0, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -2;
+  animation: cryptoFloat 15s ease-in-out infinite;
+}
+
+/* Crypto chart grid overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.3;
+  animation: gridPulse 3s ease-in-out infinite;
+}
+
+@keyframes cryptoFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-15px) rotate(0.5deg); }
+  66% { transform: translateY(10px) rotate(-0.5deg); }
+}
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.1; }
+}
+
+/* Header styling */
+header {
+  background: rgba(0, 0, 0, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 2px solid var(--agi-red) !important;
+  box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5) !important;
+  position: relative !important;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--agi-red), var(--agi-gold), var(--agi-red), transparent);
+  animation: headerGlow 2s ease-in-out infinite;
+}
+
+@keyframes headerGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Title styling */
+h1, .text-xl, .text-2xl, .text-3xl {
+  font-family: 'Orbitron', monospace !important;
+  font-weight: 700 !important;
+  color: var(--agi-red) !important;
+  text-shadow: 0 0 10px var(--agi-red) !important;
+  letter-spacing: 2px !important;
+  animation: titlePulse 3s ease-in-out infinite !important;
+}
+
+@keyframes titlePulse {
+  0%, 100% { text-shadow: 0 0 10px var(--agi-red); }
+  50% { text-shadow: 0 0 20px var(--agi-red), 0 0 30px var(--agi-red); }
+}
+
+/* Message containers */
+.bg-card, .bg-muted {
+  background: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(15px) !important;
+  border: 1px solid var(--agi-red) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3) !important;
+}
+
+/* Input styling */
+.bg-input, input, textarea {
+  background: rgba(0, 0, 0, 0.9) !important;
+  border: 2px solid var(--agi-red) !important;
+  border-radius: 12px !important;
+  color: white !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 500 !important;
+}
+
+/* Button styling */
+.bg-primary, button[type="submit"] {
+  background: linear-gradient(135deg, var(--agi-red) 0%, var(--agi-gold) 100%) !important;
+  border: 2px solid var(--agi-gold) !important;
+  color: white !important;
+  font-family: 'Orbitron', monospace !important;
+  font-weight: 600 !important;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8) !important;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.bg-primary:hover, button[type="submit"]:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--agi-red), var(--agi-gold));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, var(--agi-gold), var(--agi-red));
+}
+
+/* Text styling */
+.text-foreground {
+  color: white !important;
+}
+
+.text-muted-foreground {
+  color: #ff3333 !important;
+}
+
+/* Loading animations */
+.animate-spin {
+  border-color: var(--agi-red) var(--agi-gold) var(--agi-red) transparent !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body::after {
+    background-size: 30px 30px;
+  }
+  
+  h1, .text-xl, .text-2xl, .text-3xl {
+    font-size: 1.5rem !important;
+  }
+} 

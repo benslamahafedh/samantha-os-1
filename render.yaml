@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: samantha-os1-chatbot
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /
+    envVars:
+      - key: CHAINLIT_HOST
+        value: 0.0.0.0
+      - key: CHAINLIT_PORT
+        value: 80
+    autoDeploy: true
+    disk:
+      name: samantha-data
+      mountPath: /app/data
+      sizeGB: 1 

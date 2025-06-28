@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  samantha-os1:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - CHAINLIT_HOST=0.0.0.0
+      - CHAINLIT_PORT=80
+    restart: unless-stopped
+    volumes:
+      - samantha_data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  samantha_data: 

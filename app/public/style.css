@@ -1,0 +1,602 @@
+/* 🎵 SAMANTHA SOL - SoundCloud Style Music Interface 🎧 */
+/* Modern Music Player Aesthetic with Anime Waifu Vibes */
+
+/* GLOBAL RESET AND BASE STYLING */
+* {
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html, body, #root, [data-testid="main"] {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%) !important;
+  min-height: 100vh !important;
+  font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: #ffffff !important;
+  overflow-x: hidden !important;
+}
+
+/* HIDE ALL CHAINLIT DEFAULT ELEMENTS */
+input, textarea, button:not(.music-button), 
+.MuiInputBase-root, .MuiTextField-root, .MuiOutlinedInput-root,
+[data-testid="chat-input"], [data-testid="chat-input-field"],
+[class*="input"], [class*="Input"], [class*="send"], [class*="Submit"],
+.MuiButton-root:not(.music-button), .MuiIconButton-root:not(.music-button),
+[data-testid="chat-input-container"], [data-testid="input-container"],
+.cl-input, .cl-textInput, .cl-button, .cl-sendButton,
+.cl-chatInput, .cl-inputContainer, [class*="inputContainer"],
+[class*="message"], [class*="Message"], .cl-message {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* SOUNDCLOUD-STYLE TOP BANNER */
+.soundcloud-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(135deg, #ff5500 0%, #ff8800 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  z-index: 1000;
+  box-shadow: 0 2px 20px rgba(255, 85, 0, 0.3);
+}
+
+.soundcloud-banner::before {
+  content: "🎵";
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+/* MAIN MUSIC PLAYER CONTAINER */
+.music-player-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  background: linear-gradient(145deg, #2a2a2a 0%, #1f1f1f 100%);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 8px 40px rgba(255, 85, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  z-index: 100;
+}
+
+/* TRACK INFO HEADER */
+.track-header {
+  position: relative;
+  padding: 20px;
+  background: linear-gradient(135deg, #333 0%, #222 100%);
+}
+
+.track-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.track-artist {
+  font-size: 14px;
+  color: #ff5500;
+  font-weight: 500;
+}
+
+.track-stats {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  color: #888;
+}
+
+/* ANIME AVATAR SECTION */
+.avatar-section {
+  position: relative;
+  height: 300px;
+  background: linear-gradient(145deg, #ff5500, #ff8800, #ffaa00);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.anime-avatar {
+  width: 240px !important;
+  height: 240px !important;
+  border-radius: 50% !important;
+  border: 4px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 
+    0 0 40px rgba(255, 85, 0, 0.6),
+    0 0 80px rgba(255, 136, 0, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  animation: avatarFloat 4s ease-in-out infinite !important;
+}
+
+@keyframes avatarFloat {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-8px) scale(1.02); }
+}
+
+.anime-avatar:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 
+    0 0 60px rgba(255, 85, 0, 0.8),
+    0 0 100px rgba(255, 136, 0, 0.6) !important;
+}
+
+/* WAVEFORM VISUALIZATION */
+.waveform-container {
+  position: relative;
+  height: 80px;
+  background: #1a1a1a;
+  margin: 0;
+  overflow: hidden;
+}
+
+.waveform {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 2px;
+  padding: 0 20px;
+}
+
+.wave-bar {
+  width: 3px;
+  background: linear-gradient(180deg, #ff5500 0%, #ff8800 50%, #ffaa00 100%);
+  border-radius: 2px;
+  animation: waveAnimation 2s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+@keyframes waveAnimation {
+  0%, 100% { height: 20px; opacity: 0.6; }
+  50% { height: 60px; opacity: 1; }
+}
+
+/* PROGRESS BAR */
+.progress-container {
+  position: relative;
+  height: 6px;
+  background: #333;
+  margin: 0 20px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff5500, #ff8800);
+  border-radius: 3px;
+  width: 45%;
+  position: relative;
+  animation: progressMove 3s linear infinite;
+}
+
+@keyframes progressMove {
+  0% { width: 40%; }
+  50% { width: 55%; }
+  100% { width: 40%; }
+}
+
+.time-display {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 20px;
+  font-size: 12px;
+  color: #888;
+}
+
+/* COMMENT SECTION */
+.comment-section {
+  padding: 20px;
+  background: #1f1f1f;
+}
+
+.current-comment {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 85, 0, 0.1);
+  border: 1px solid rgba(255, 85, 0, 0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 15px;
+}
+
+.comment-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ff5500;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.comment-text {
+  flex: 1;
+  font-size: 13px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.comment-input {
+  display: flex;
+  align-items: center;
+  background: #2a2a2a;
+  border-radius: 25px;
+  padding: 12px 20px;
+  gap: 15px;
+}
+
+.comment-placeholder {
+  flex: 1;
+  color: #888;
+  font-size: 14px;
+}
+
+.reaction-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.reaction-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 85, 0, 0.1);
+  border: 1px solid rgba(255, 85, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reaction-btn:hover {
+  background: rgba(255, 85, 0, 0.2);
+  transform: scale(1.1);
+}
+
+/* BOTTOM STATS */
+.bottom-stats {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  border-top: 1px solid #333;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #888;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.stat-item:hover {
+  color: #ff5500;
+}
+
+.stat-icon {
+  font-size: 18px;
+}
+
+/* FLOATING MUSIC NOTES */
+.music-note {
+  position: fixed;
+  font-size: 20px;
+  color: rgba(255, 85, 0, 0.6);
+  pointer-events: none;
+  animation: floatNote 6s linear infinite;
+  z-index: 5;
+}
+
+@keyframes floatNote {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* PULSING BACKGROUND EFFECT */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 85, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 136, 0, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 170, 0, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+  animation: backgroundPulse 8s ease-in-out infinite;
+}
+
+@keyframes backgroundPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 480px) {
+  .music-player-container {
+    width: 95%;
+    margin: 0 auto;
+  }
+  
+  .anime-avatar {
+    width: 200px !important;
+    height: 200px !important;
+  }
+  
+  .avatar-section {
+    height: 250px;
+  }
+  
+  .bottom-stats {
+    gap: 20px;
+    padding: 0 20px;
+  }
+}
+
+/* 🎭 SAMANTHA INTERACTIVE AVATAR STYLES */
+
+/* NUCLEAR OVERRIDE: Hide ALL input elements and chat interface */
+input,
+textarea,
+button:not(.samantha-btn),
+.MuiInputBase-root,
+.MuiTextField-root,
+.MuiOutlinedInput-root,
+[data-testid="chat-input"],
+[data-testid="chat-input-field"],
+[class*="input"],
+[class*="Input"],
+[class*="send"],
+[class*="Submit"],
+.MuiButton-root:not(.samantha-btn),
+.MuiIconButton-root:not(.samantha-btn),
+[data-testid="chat-input-container"],
+[data-testid="input-container"],
+.cl-input,
+.cl-textInput,
+.cl-button,
+.cl-sendButton,
+.cl-chatInput,
+.cl-inputContainer,
+[class*="inputContainer"],
+[class*="message"],
+[class*="Message"],
+.cl-message,
+footer,
+[data-testid="footer"],
+.cl-footer,
+.chat\.input\.placeholder,
+[class*="placeholder"],
+[placeholder],
+.cl-textField,
+.cl-input-field {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+    height: 0 !important;
+    width: 0 !important;
+    z-index: -1 !important;
+}
+
+/* Body styling for dark cosmic background */
+body {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #0a0a0a) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    overflow: hidden !important;
+    height: 100vh !important;
+    color: #ffffff !important;
+}
+
+/* Avatar container positioning */
+.samantha-avatar-container {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 10000 !important;
+}
+
+/* Main avatar styling */
+.samantha-main-avatar {
+    border: 4px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.samantha-main-avatar:hover {
+    border-color: rgba(255, 136, 0, 0.5) !important;
+}
+
+/* Samantha image styling */
+.samantha-img {
+    object-fit: cover !important;
+    filter: brightness(1.1) contrast(1.1) !important;
+}
+
+/* Voice ring effects */
+.voice-ring {
+    border-width: 4px !important;
+    border-style: solid !important;
+    background: transparent !important;
+}
+
+/* Mic overlay styling */
+.mic-overlay {
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Floating icons */
+.floating-icon {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5) !important;
+    filter: brightness(1.2) !important;
+}
+
+/* Status indicator */
+.status-indicator {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 136, 0, 0.3) !important;
+}
+
+/* Instruction text */
+.instruction-text {
+    text-shadow: 0 0 15px rgba(255, 136, 0, 0.6) !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .samantha-avatar-container {
+        transform: translate(-50%, -50%) scale(0.85) !important;
+    }
+    
+    .instruction-text {
+        font-size: 16px !important;
+        top: 320px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .samantha-avatar-container {
+        transform: translate(-50%, -50%) scale(0.7) !important;
+    }
+    
+    .instruction-text {
+        font-size: 14px !important;
+        top: 280px !important;
+    }
+}
+
+/* Animation optimizations for mobile */
+@media (prefers-reduced-motion: reduce) {
+    .samantha-main-avatar,
+    .voice-ring,
+    .floating-icon,
+    .instruction-text {
+        animation: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .samantha-main-avatar {
+        border-color: #ffffff !important;
+    }
+    
+    .instruction-text {
+        color: #ffffff !important;
+    }
+}
+
+/* Dark mode optimization */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #000000, #0f0f0f, #000000) !important;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .samantha-main-avatar {
+        transform: scale(1) !important;
+    }
+    
+    .samantha-main-avatar:active {
+        transform: scale(0.95) !important;
+    }
+}
+
+/* Additional hiding for stubborn elements */
+div[class*="chat"],
+div[class*="Chat"],
+div[class*="input"],
+div[class*="Input"],
+div[class*="send"],
+div[class*="Send"],
+div[class*="message"],
+div[class*="Message"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Ensure only our avatar is visible */
+body > *:not(.samantha-avatar-container):not(script):not(style) {
+    opacity: 0.1 !important;
+    pointer-events: none !important;
+}
+
+/* Make sure our avatar stays on top */
+.samantha-avatar-container * {
+    pointer-events: auto !important;
+    opacity: 1 !important;
+}
+
+/* Loading screen override */
+[data-testid="loading"],
+.loading,
+.cl-loading {
+    display: none !important;
+}
+
+/* Success notification styling */
+div[style*="position: fixed"][style*="top: 20px"] {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 0 30px rgba(255, 85, 0, 0.3) !important;
+} 
